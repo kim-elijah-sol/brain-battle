@@ -1,5 +1,11 @@
+import ColorTurn from "./ColorTurn";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <ColorTurn />
+    </>
+  );
 }
 
 export default App;
