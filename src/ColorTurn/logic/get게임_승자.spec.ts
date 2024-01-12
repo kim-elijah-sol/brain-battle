@@ -51,6 +51,32 @@ describe("get게임_승자", () => {
         ])
       )
     ).toBe("b");
+
+    expect(
+      get게임_승자(
+        create바둑판Mock([
+          [null, "b", null, null, null, null],
+          [null, null, "b", null, null, null],
+          [null, null, null, "b", null, null],
+          [null, null, null, null, "b", null],
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+        ])
+      )
+    ).toBe("b");
+
+    expect(
+      get게임_승자(
+        create바둑판Mock([
+          [null, null, null, null, null, null],
+          ["b", null, null, null, null, null],
+          [null, "b", null, null, null, null],
+          [null, null, "b", null, null, null],
+          [null, null, null, "b", null, null],
+          [null, null, null, null, null, null],
+        ])
+      )
+    ).toBe("b");
   });
 
   it("게임이 종료되었는지 확인한다. : 13분면 방향 감지", () => {
@@ -62,6 +88,19 @@ describe("get게임_승자", () => {
           [null, "b", "w", null, null, null],
           [null, "w", null, "b", null, null],
           [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+        ])
+      )
+    ).toBe("w");
+
+    expect(
+      get게임_승자(
+        create바둑판Mock([
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, "w"],
+          [null, null, null, null, "w", null],
+          [null, null, null, "w", null, null],
+          [null, null, "w", null, null, null],
           [null, null, null, null, null, null],
         ])
       )
