@@ -11,11 +11,16 @@ function useColorTurn() {
 
   const [바둑판, set바둑판] = useState(create바둑판());
 
+  function 돌_놓기() {
+    console.log(차례);
+  }
+
   return {
     바둑판,
     흑돌,
     백돌,
     차례,
+    돌_놓기,
   };
 }
 

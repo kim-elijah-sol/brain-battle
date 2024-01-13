@@ -3,7 +3,7 @@ import 바둑칸 from "./components/바둑칸";
 import useColorTurn from "./hooks/useColorTurn";
 
 function ColorTurn() {
-  const { 바둑판, 흑돌, 백돌, 차례 } = useColorTurn();
+  const { 바둑판, 흑돌, 백돌, 차례, 돌_놓기 } = useColorTurn();
 
   return (
     <>
@@ -11,6 +11,7 @@ function ColorTurn() {
         남은_바둑알={백돌.남은_바둑알}
         name="백돌"
         is내_차례={차례 === "백돌"}
+        onClick돌_놓기={돌_놓기}
       />
       <main
         style={{
@@ -38,6 +39,7 @@ function ColorTurn() {
         남은_바둑알={흑돌.남은_바둑알}
         name="흑돌"
         is내_차례={차례 === "흑돌"}
+        onClick돌_놓기={돌_놓기}
       />
     </>
   );
