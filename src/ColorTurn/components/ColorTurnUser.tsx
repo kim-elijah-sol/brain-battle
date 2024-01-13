@@ -1,14 +1,14 @@
 interface Props {
   남은_바둑알: number;
   name: string;
-  is내_차례: boolean;
   onClick돌_놓기: () => void;
+  is돌_놓기Disabled: boolean;
 }
 
 function ColorTurnUser({
   남은_바둑알,
   name,
-  is내_차례,
+  is돌_놓기Disabled,
   onClick돌_놓기,
 }: Props) {
   return (
@@ -17,7 +17,7 @@ function ColorTurnUser({
       <button
         style={{ marginLeft: 8 }}
         type="button"
-        disabled={!is내_차례}
+        disabled={is돌_놓기Disabled}
         onClick={onClick돌_놓기}
       >
         돌 놓기

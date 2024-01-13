@@ -1,7 +1,11 @@
+import { HTMLAttributes } from "react";
 import style from "./놓을_수_있는_자리.module.css";
 
-function 놓을_수_있는_자리() {
-  return <div className={style.p}></div>;
+interface Props
+  extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "className"> {}
+
+function 놓을_수_있는_자리(props: Props) {
+  return <div className={style.p} {...props} />;
 }
 
 export default 놓을_수_있는_자리;
