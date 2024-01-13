@@ -28,7 +28,8 @@ function ColorTurn() {
             }}
           >
             {행.map((셀, x) => (
-              <바둑칸 key={x} />
+              // eslint-disable-next-line react/jsx-pascal-case
+              <바둑칸 바둑알={셀.바둑알} key={x} />
             ))}
           </div>
         ))}
