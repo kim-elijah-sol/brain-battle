@@ -3,7 +3,8 @@ import 바둑칸 from "./components/바둑칸";
 import useColorTurn from "./hooks/useColorTurn";
 
 function ColorTurn() {
-  const { 바둑판, 흑돌, 백돌, 차례, 돌_놓기 } = useColorTurn();
+  const { 바둑판, 흑돌, 백돌, 차례, 돌_놓기, 놓을_수_있는_위치 } =
+    useColorTurn();
 
   return (
     <>
@@ -30,7 +31,13 @@ function ColorTurn() {
           >
             {행.map((셀, x) => (
               // eslint-disable-next-line react/jsx-pascal-case
-              <바둑칸 바둑알={셀.바둑알} key={x} />
+              <바둑칸
+                바둑알={셀.바둑알}
+                is놓을_수_있는_위치={놓을_수_있는_위치.some(
+                  ([_x, _y]) => x === _x && y === _y
+                )}
+                key={x}
+              />
             ))}
           </div>
         ))}
