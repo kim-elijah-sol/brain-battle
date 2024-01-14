@@ -140,7 +140,17 @@ function useColorTurn() {
           게임_승자 === "b" ? "흑돌" : "백돌"
         }] 님이 승리하셨습니다.`
       );
+
+      $놓을_돌.current = undefined;
+      $옮길_돌.current = undefined;
+
+      set차례("흑돌");
+      set마지막으로_놓인_돌_위치(undefined);
+      set바둑판(create바둑판());
+      백돌.알_채우기();
+      흑돌.알_채우기();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [바둑판]);
 
   return {

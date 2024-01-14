@@ -9,9 +9,14 @@ function useColorTurnUser() {
     set남은_바둑알(남은_바둑알 - 1);
   }
 
+  function 알_채우기() {
+    set남은_바둑알(기본_바둑알_수);
+  }
+
   return {
     남은_바둑알,
     바둑알_놓기,
+    알_채우기,
   };
 }
 
