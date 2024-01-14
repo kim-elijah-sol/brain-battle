@@ -1,6 +1,7 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { 바둑판_길이 } from "../constant";
 import { create바둑판 } from "../logic/create바둑판";
+import { get게임_승자 } from "../logic/get게임_승자";
 import useColorTurnUser from "./useColorTurnUser";
 
 function useColorTurn() {
@@ -129,6 +130,18 @@ function useColorTurn() {
       .map((_, x) => [x, y] as [number, number])
       .filter(([x, y]) => 바둑판[y][x].바둑알 === null);
   }, [차례, 바둑판]);
+
+  useEffect(() => {
+    const 게임_승자 = get게임_승자(바둑판);
+
+    if (게임_승자) {
+      alert(
+        `게임 종료 : [${
+          게임_승자 === "b" ? "흑돌" : "백돌"
+        }] 님이 승리하셨습니다.`
+      );
+    }
+  }, [바둑판]);
 
   return {
     바둑판,
