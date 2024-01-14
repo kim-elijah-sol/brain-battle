@@ -26,7 +26,9 @@ function ColorTurn() {
       <ColorTurnUser
         남은_바둑알={백돌.남은_바둑알}
         name="백돌"
-        is돌_놓기Disabled={차례 !== "백돌" || is가진_돌_놓을_수_없음}
+        is돌_놓기Disabled={
+          차례 !== "백돌" || is가진_돌_놓을_수_없음 || 백돌.남은_바둑알 === 0
+        }
         onClick돌_놓기={돌_놓기}
       />
       <main
@@ -73,7 +75,9 @@ function ColorTurn() {
       <ColorTurnUser
         남은_바둑알={흑돌.남은_바둑알}
         name="흑돌"
-        is돌_놓기Disabled={차례 !== "흑돌" || is가진_돌_놓을_수_없음}
+        is돌_놓기Disabled={
+          차례 !== "흑돌" || is가진_돌_놓을_수_없음 || 흑돌.남은_바둑알 === 0
+        }
         onClick돌_놓기={돌_놓기}
       />
     </>
