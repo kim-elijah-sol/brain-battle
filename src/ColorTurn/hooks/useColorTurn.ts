@@ -14,6 +14,9 @@ function useColorTurn() {
     Array<[number, number]>
   >([]);
 
+  const [마지막으로_놓인_돌_위치, set마지막으로_놓인_돌_위치] =
+    useState<[number, number]>();
+
   const 흑돌 = useColorTurnUser();
 
   const 백돌 = useColorTurnUser();
@@ -47,6 +50,7 @@ function useColorTurn() {
     );
     set놓을_수_있는_위치([]);
     set차례(차례 === "백돌" ? "흑돌" : "백돌");
+    set마지막으로_놓인_돌_위치([x, y]);
     if (차례 === "백돌") 백돌.바둑알_놓기();
     else 흑돌.바둑알_놓기();
 
@@ -108,6 +112,7 @@ function useColorTurn() {
 
       set놓을_수_있는_위치([]);
       set차례(차례 === "백돌" ? "흑돌" : "백돌");
+      set마지막으로_놓인_돌_위치([x, y]);
 
       if (is지뢰) {
         const 옮겨진_알 = 바둑판[_y][_x].바둑알 === "b" ? "흑돌" : "백돌";
@@ -137,6 +142,7 @@ function useColorTurn() {
     놓인_돌_클릭,
     $놓을_돌,
     놓인_돌_옮기기,
+    마지막으로_놓인_돌_위치,
   };
 }
 
