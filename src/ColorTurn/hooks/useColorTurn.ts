@@ -2,12 +2,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { 바둑판_길이 } from "../constant";
 import { create바둑판 } from "../logic/create바둑판";
 import { get게임_승자 } from "../logic/get게임_승자";
+import type { 바둑알 } from "../types";
 import useColorTurnUser from "./useColorTurnUser";
 
 function useColorTurn() {
   const $놓을_돌 = useRef<"가진_돌" | "놓인_돌">();
 
   const $옮길_돌 = useRef<[number, number]>();
+
+  const $게임_승자 = useRef<바둑알>();
 
   const [차례, set차례] = useState<"흑돌" | "백돌">("흑돌");
 
@@ -17,6 +20,8 @@ function useColorTurn() {
 
   const [마지막으로_놓인_돌_위치, set마지막으로_놓인_돌_위치] =
     useState<[number, number]>();
+
+  const [is게임_종료, setIs게임_종료] = useState(false);
 
   const 흑돌 = useColorTurnUser();
 
@@ -123,6 +128,18 @@ function useColorTurn() {
     }
   }
 
+  function 게임_초기화() {
+    $놓을_돌.current = undefined;
+    $옮길_돌.current = undefined;
+
+    set차례("흑돌");
+    set마지막으로_놓인_돌_위치(undefined);
+    set바둑판(create바둑판());
+    백돌.알_채우기();
+    흑돌.알_채우기();
+    setIs게임_종료(false);
+  }
+
   const 가진_돌_놓을_수_있는_위치 = useMemo(() => {
     const y = 차례 === "백돌" ? 0 : 바둑판_길이 - 1;
 
@@ -135,23 +152,21 @@ function useColorTurn() {
     const 게임_승자 = get게임_승자(바둑판);
 
     if (게임_승자) {
-      alert(
-        `게임 종료 : [${
-          게임_승자 === "b" ? "흑돌" : "백돌"
-        }] 님이 승리하셨습니다.`
-      );
-
-      $놓을_돌.current = undefined;
-      $옮길_돌.current = undefined;
-
-      set차례("흑돌");
-      set마지막으로_놓인_돌_위치(undefined);
-      set바둑판(create바둑판());
-      백돌.알_채우기();
-      흑돌.알_채우기();
+      $게임_승자.current = 게임_승자;
+      setIs게임_종료(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [바둑판]);
+
+  useEffect(() => {
+    if (is게임_종료) {
+      alert(
+        `게임 종료 : [${
+          $게임_승자.current! === "b" ? "흑돌" : "백돌"
+        }] 님이 승리하셨습니다.`
+      );
+    }
+  }, [is게임_종료]);
 
   return {
     바둑판,
@@ -166,6 +181,8 @@ function useColorTurn() {
     $놓을_돌,
     놓인_돌_옮기기,
     마지막으로_놓인_돌_위치,
+    is게임_종료,
+    게임_초기화,
   };
 }
 

@@ -1,6 +1,10 @@
 import { PropsWithChildren } from "react";
 
-function 바둑칸({ children }: PropsWithChildren) {
+interface Props {
+  is지뢰?: boolean;
+}
+
+function 바둑칸({ is지뢰, children }: PropsWithChildren<Props>) {
   return (
     <div
       style={{
@@ -11,7 +15,7 @@ function 바둑칸({ children }: PropsWithChildren) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#ddb35b",
+        backgroundColor: is지뢰 ? "#f00" : "#ddb35b",
       }}
     >
       {children}
