@@ -1,9 +1,13 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { 바둑판_길이 } from "../constant";
 import { create바둑판 } from "../logic/create바둑판";
 import useColorTurnUser from "./useColorTurnUser";
 
 function useColorTurn() {
+  const $놓을_돌 = useRef<"가진_돌" | "놓인_돌">();
+
+  const $옮길_돌 = useRef<[number, number]>();
+
   const [차례, set차례] = useState<"흑돌" | "백돌">("흑돌");
 
   const [놓을_수_있는_위치, set놓을_수_있는_위치] = useState<
@@ -17,6 +21,8 @@ function useColorTurn() {
   const [바둑판, set바둑판] = useState(create바둑판());
 
   function 돌_놓기() {
+    $놓을_돌.current = "가진_돌";
+    $옮길_돌.current = undefined;
     set놓을_수_있는_위치(가진_돌_놓을_수_있는_위치);
   }
 
@@ -51,6 +57,9 @@ function useColorTurn() {
   }
 
   function 놓인_돌_클릭(x: number, y: number) {
+    $놓을_돌.current = "놓인_돌";
+    $옮길_돌.current = [x, y];
+
     const 놓을_수_있는_주변_위치: Array<[number, number]> = [
       [-1, 0],
       [-1, -1],
@@ -65,6 +74,47 @@ function useColorTurn() {
       .map(([_x, _y]) => [x + _x, y + _y]);
 
     set놓을_수_있는_위치(놓을_수_있는_주변_위치);
+  }
+
+  function 놓인_돌_옮기기(x: number, y: number) {
+    if ($옮길_돌.current) {
+      const [_x, _y] = $옮길_돌.current;
+
+      let 옮겨질_알 = 바둑판[_y][_x].바둑알;
+
+      const { is지뢰 } = 바둑판[y][x];
+
+      if (is지뢰) 옮겨질_알 = 옮겨질_알 === "w" ? "b" : "w";
+
+      set바둑판((바둑판) =>
+        바둑판.map((행, __y) =>
+          행.map((셀, __x) =>
+            // 옮겨질 위치 찾기
+            x === __x && y === __y
+              ? {
+                  ...셀,
+                  바둑알: 옮겨질_알,
+                }
+              : // 비워질 위치 찾기
+              _x === __x && _y === __y
+              ? {
+                  ...셀,
+                  바둑알: null,
+                }
+              : 셀
+          )
+        )
+      );
+
+      set놓을_수_있는_위치([]);
+      set차례(차례 === "백돌" ? "흑돌" : "백돌");
+
+      if (is지뢰) {
+        const 옮겨진_알 = 바둑판[_y][_x].바둑알 === "b" ? "흑돌" : "백돌";
+        const 바뀌는_알 = 옮겨질_알 === "b" ? "흑돌" : "백돌";
+        console.log(`지뢰 발견 : "${옮겨진_알}"이 "${바뀌는_알}"로 바뀝니다.`);
+      }
+    }
   }
 
   const 가진_돌_놓을_수_있는_위치 = useMemo(() => {
@@ -85,6 +135,8 @@ function useColorTurn() {
     가진_돌_놓기,
     is가진_돌_놓을_수_없음: 가진_돌_놓을_수_있는_위치.length === 0,
     놓인_돌_클릭,
+    $놓을_돌,
+    놓인_돌_옮기기,
   };
 }
 
