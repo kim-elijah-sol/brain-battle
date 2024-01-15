@@ -89,13 +89,15 @@ function ColorTurn() {
         }
         onClick돌_놓기={돌_놓기}
       />
-      <div
-        style={{
-          textAlign: "center",
-        }}
-      >
-        <button onClick={게임_초기화}>다시 하기</button>
-      </div>
+      {is게임_종료 && (
+        <div
+          style={{
+            textAlign: "center",
+          }}
+        >
+          <button onClick={게임_초기화}>다시 하기</button>
+        </div>
+      )}
     </>
   );
 }
