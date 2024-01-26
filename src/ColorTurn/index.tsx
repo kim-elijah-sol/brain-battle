@@ -38,17 +38,15 @@ function ColorTurn() {
         onClick돌_놓기={돌_놓기}
       />
       <main
-        style={{
+        css={{
           border: "1px solid black",
-          width: 600,
-          height: 600,
           margin: "0 auto",
         }}
       >
         {바둑판.map((행, y) => (
           <div
             key={y}
-            style={{
+            css={{
               display: "flex",
             }}
           >
