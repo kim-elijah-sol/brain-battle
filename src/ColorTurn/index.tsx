@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
+import { FullLayout } from "@/lib/components";
 import ColorTurnUser from "./components/ColorTurnUser";
 import 놓을_수_있는_자리 from "./components/놓을_수_있는_자리";
 import 놓인_바둑알 from "./components/놓인_바둑알";
@@ -24,7 +25,7 @@ function ColorTurn() {
   } = useColorTurn();
 
   return (
-    <>
+    <FullLayout>
       <ColorTurnUser
         남은_바둑알={백돌.남은_바둑알}
         name="백돌"
@@ -41,7 +42,7 @@ function ColorTurn() {
           border: "1px solid black",
           width: 600,
           height: 600,
-          margin: "auto",
+          margin: "0 auto",
         }}
       >
         {바둑판.map((행, y) => (
@@ -98,7 +99,7 @@ function ColorTurn() {
           <button onClick={게임_초기화}>다시 하기</button>
         </div>
       )}
-    </>
+    </FullLayout>
   );
 }
 
