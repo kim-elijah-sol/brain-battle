@@ -121,4 +121,34 @@ describe("get게임_승자", () => {
       )
     ).toBe(null);
   });
+
+  it("게임이 종료되었는지 확인한다. 4목 초과 Case", () => {
+    expect(
+      get게임_승자(
+        create바둑판Mock([
+          ["b", "b", "b", "b", "b", null],
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+          ["b", null, null, null, null, null],
+          ["b", null, null, null, null, null],
+          ["b", null, null, null, null, null],
+        ])
+      )
+    ).toBe(null);
+  });
+
+  it("게임이 종료되었는지 확인한다. 이중 승리 Case", () => {
+    expect(
+      get게임_승자(
+        create바둑판Mock([
+          [null, null, null, null, null, null],
+          [null, null, "w", "w", "w", "w"],
+          [null, "b", "b", "b", "b", null],
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+        ])
+      )
+    ).toBe(null);
+  });
 });
