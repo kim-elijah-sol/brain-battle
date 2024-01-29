@@ -1,15 +1,47 @@
 import { 바둑판_길이, 종료_개수 } from "../constant";
 import { 바둑알, 바둑칸 } from "../types";
 
-function create승리한_바둑알_텍스트(바둑알: "w" | "b") {
-  return Array.from({ length: 종료_개수 }).fill(바둑알).join("");
+type 바둑알_그룹 = {
+  바둑알: 바둑알;
+  개수: number;
+};
+
+function get바둑알_그룹(acc: 바둑알_그룹[], current: 바둑알) {
+  const last = acc[acc.length - 1];
+
+  if (last?.바둑알 === current) {
+    return acc.map((바둑알_그룹, index) => {
+      if (index === acc.length - 1) {
+        return {
+          ...바둑알_그룹,
+          개수: 바둑알_그룹.개수 + 1,
+        };
+      } else {
+        return 바둑알_그룹;
+      }
+    });
+  } else {
+    return acc.concat({
+      바둑알: current,
+      개수: 1,
+    });
+  }
+}
+
+function is승리(바둑알_목록: 바둑알[], 바둑알: "w" | "b") {
+  return 바둑알_목록
+    .reduce(get바둑알_그룹, [])
+    .some(
+      (바둑알_그룹) =>
+        바둑알_그룹.바둑알 === 바둑알 && 바둑알_그룹.개수 === 종료_개수
+    );
 }
 
 function 탐색(바둑판: 바둑칸[]): 바둑알 {
-  const 바둑알_텍스트 = 바둑판.map((바둑알) => 바둑알.바둑알 ?? "n").join("");
+  const 바둑알_목록 = 바둑판.map((바둑알) => 바둑알.바둑알);
 
-  if (바둑알_텍스트.includes(create승리한_바둑알_텍스트("b"))) return "b";
-  if (바둑알_텍스트.includes(create승리한_바둑알_텍스트("w"))) return "w";
+  if (is승리(바둑알_목록, "b")) return "b";
+  if (is승리(바둑알_목록, "w")) return "w";
   return null;
 }
 
