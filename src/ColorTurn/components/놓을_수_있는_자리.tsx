@@ -1,12 +1,10 @@
 import { css } from "@emotion/react";
 import { HTMLAttributes } from "react";
-import { 바둑판_길이 } from "../constant";
+import { 바둑알_사이즈_스타일 } from "./style";
 
 interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {}
 
 function 놓을_수_있는_자리(props: Props) {
-  const size = `calc(calc(calc(100vw - 32px) / ${바둑판_길이}) * 0.6)`;
-
   return (
     <div
       css={css`
@@ -16,11 +14,8 @@ function 놓을_수_있는_자리(props: Props) {
         position: relative;
 
         &::after {
+          ${바둑알_사이즈_스타일}
           content: "";
-          width: ${size};
-          height: ${size};
-          max-width: 60px;
-          max-height: 60px;
           border-radius: 50%;
           position: absolute;
           left: 50%;
