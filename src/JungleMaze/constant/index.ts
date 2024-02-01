@@ -1,5 +1,7 @@
 import { Street } from "../types";
 
+export const streets = ["n", "e", "s", "w"] as const;
+
 export const jungle길이 = 7;
 
 type X = number;
