@@ -1,11 +1,135 @@
+import { FullLayout } from "@/lib/components";
+import { jungle길이 } from "./constant";
 import useJungleMaze from "./hooks/useJungleMaze";
 
+const zeroPositionProperty = {
+  n: "top",
+  e: "right",
+  s: "bottom",
+  w: "left",
+};
+
+const fiftyPositionProperty = {
+  n: "left",
+  e: "top",
+  s: "left",
+  w: "top",
+};
+
 function JungleMaze() {
-  const { jungle } = useJungleMaze();
+  const { jungle, restPiece } = useJungleMaze();
 
-  console.log(jungle);
+  console.log(jungle, restPiece);
 
-  return <></>;
+  return (
+    <FullLayout>
+      <div
+        css={{
+          border: "1px solid black",
+          margin: "0 auto",
+        }}
+      >
+        {jungle.map((행, y) => (
+          <div
+            key={y}
+            css={{
+              display: "flex",
+            }}
+          >
+            {행.map((칸, x) => (
+              <div
+                key={x}
+                css={{
+                  width: 100,
+                  height: 100,
+                  border: "1px solid black",
+                  borderLeft: "none",
+                  borderTop: "none",
+                  borderRightWidth: x === jungle길이 - 1 ? 0 : 1,
+                  borderBottomWidth: y === jungle길이 - 1 ? 0 : 1,
+                  boxSizing: "border-box",
+                  position: "relative",
+                  backgroundColor: "#30634b",
+                }}
+              >
+                {칸.street.map((street, index) => (
+                  <div
+                    key={index}
+                    css={{
+                      position: "absolute",
+                      transform: `translate${
+                        street === "n" || street === "s" ? "X" : "Y"
+                      }(-50%)`,
+                      [street === "n" || street === "s"
+                        ? "width"
+                        : "height"]: 30,
+                      [street === "n" || street === "s"
+                        ? "height"
+                        : "width"]: 50,
+                      backgroundColor: "#9f9598",
+                      [zeroPositionProperty[street]]: 0,
+                      [fiftyPositionProperty[street]]: "50%",
+                    }}
+                  />
+                ))}
+                <div
+                  css={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: 30,
+                    height: 30,
+                    backgroundColor: "#9f9598",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <div
+        css={{
+          width: 100,
+          height: 100,
+          border: "1px solid black",
+          boxSizing: "border-box",
+          position: "relative",
+          backgroundColor: "#30634b",
+          marginTop: 20,
+        }}
+      >
+        {restPiece.map((street, index) => (
+          <div
+            key={index}
+            css={{
+              position: "absolute",
+              transform: `translate${
+                street === "n" || street === "s" ? "X" : "Y"
+              }(-50%)`,
+              [street === "n" || street === "s" ? "width" : "height"]: 30,
+              [street === "n" || street === "s" ? "height" : "width"]: 50,
+              backgroundColor: "#9f9598",
+              [zeroPositionProperty[street]]: 0,
+              [fiftyPositionProperty[street]]: "50%",
+            }}
+          />
+        ))}
+        <div
+          css={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 30,
+            height: 30,
+            backgroundColor: "#9f9598",
+          }}
+        />
+      </div>
+    </FullLayout>
+  );
 }
 
 export default JungleMaze;
