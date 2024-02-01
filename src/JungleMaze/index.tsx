@@ -17,7 +17,8 @@ const fiftyPositionProperty = {
 };
 
 function JungleMaze() {
-  const { jungle, restPiece, 남은_조각_돌리기 } = useJungleMaze();
+  const { jungle, restPiece, 남은_조각_돌리기, 밀어_넣기, 밀_수_있는_칸 } =
+    useJungleMaze();
 
   return (
     <FullLayout>
@@ -81,6 +82,22 @@ function JungleMaze() {
                     backgroundColor: "#9f9598",
                   }}
                 />
+                {밀_수_있는_칸.some(([_y, _x]) => _x === x && _y === y) && (
+                  <div
+                    onClick={() => 밀어_넣기([y, x])}
+                    css={{
+                      cursor: "pointer",
+                      position: "absolute",
+                      left: "50%",
+                      top: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 50,
+                      height: 50,
+                      borderRadius: "50%",
+                      backgroundColor: "rgba(235, 232, 67, 0.5)",
+                    }}
+                  />
+                )}
               </div>
             ))}
           </div>
