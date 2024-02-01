@@ -1,6 +1,8 @@
 import { jungle길이, 고정칸Street, 고정칸_좌표 } from "../constant";
 import { Piece, Street } from "../types";
 
+const streets = ["n", "e", "s", "w"] as const;
+
 function createJungle(): Piece[][] {
   const jungle: Piece[][] = [];
 
@@ -13,9 +15,20 @@ function createJungle(): Piece[][] {
 
       if (is고정칸) {
         street = 고정칸Street[`${y},${x}`];
-      }
+      } else {
+        /** 2개 혹은 3개 */
+        const streetCount = Math.floor(Math.random() * 2) + 2;
 
-      street = [];
+        street = [];
+
+        /** 중복되지 않는 랜덤한 길을 생성 */
+        while (street.length < streetCount) {
+          const randomStreet = streets[Math.floor(Math.random() * 4)];
+          if (!street.includes(randomStreet)) {
+            street.push(randomStreet);
+          }
+        }
+      }
 
       row.push({
         street,
