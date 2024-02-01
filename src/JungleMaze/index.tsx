@@ -17,9 +17,7 @@ const fiftyPositionProperty = {
 };
 
 function JungleMaze() {
-  const { jungle, restPiece } = useJungleMaze();
-
-  console.log(jungle, restPiece);
+  const { jungle, restPiece, 남은_조각_돌리기 } = useJungleMaze();
 
   return (
     <FullLayout>
@@ -128,6 +126,15 @@ function JungleMaze() {
           }}
         />
       </div>
+
+      <button
+        css={{
+          marginTop: 20,
+        }}
+        onClick={남은_조각_돌리기}
+      >
+        남은 조각 돌리기
+      </button>
     </FullLayout>
   );
 }
