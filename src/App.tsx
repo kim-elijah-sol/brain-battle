@@ -1,9 +1,9 @@
-import ColorTurn from "./ColorTurn";
+import JungleMaze from "./JungleMaze";
 
 function App() {
   return (
     <>
-      <ColorTurn />
+      <JungleMaze />
     </>
   );
 }
