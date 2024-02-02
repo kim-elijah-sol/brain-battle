@@ -17,8 +17,14 @@ const fiftyPositionProperty = {
 };
 
 function JungleMaze() {
-  const { jungle, restPiece, 남은_조각_돌리기, 밀어_넣기, 밀_수_있는_칸 } =
-    useJungleMaze();
+  const {
+    jungle,
+    restPiece,
+    남은_조각_돌리기,
+    밀어_넣기,
+    밀_수_있는_칸,
+    이동할_수_있는_칸,
+  } = useJungleMaze();
 
   return (
     <FullLayout>
@@ -65,7 +71,11 @@ function JungleMaze() {
                       [street === "n" || street === "s"
                         ? "height"
                         : "width"]: 50,
-                      backgroundColor: "#9f9598",
+                      backgroundColor: 이동할_수_있는_칸.some(
+                        ([_y, _x]) => x === _x && y === _y
+                      )
+                        ? "#a5dcc9"
+                        : "#9f9598",
                       [zeroPositionProperty[street]]: 0,
                       [fiftyPositionProperty[street]]: "50%",
                     }}
@@ -79,7 +89,11 @@ function JungleMaze() {
                     transform: "translate(-50%, -50%)",
                     width: 30,
                     height: 30,
-                    backgroundColor: "#9f9598",
+                    backgroundColor: 이동할_수_있는_칸.some(
+                      ([_y, _x]) => x === _x && y === _y
+                    )
+                      ? "#a5dcc9"
+                      : "#9f9598",
                   }}
                 />
                 {밀_수_있는_칸.some(([_y, _x]) => _x === x && _y === y) && (

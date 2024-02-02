@@ -67,8 +67,6 @@ function useJungleMaze() {
     return getMovablePosition(jungle, [6, 0]);
   }, [jungle]);
 
-  console.log(이동할_수_있는_칸);
-
   return {
     jungle,
     restPiece,
@@ -77,6 +75,7 @@ function useJungleMaze() {
     밀_수_있는_칸: 밀_수_있는_칸.filter(
       ([y, x]) => 밀어낼_수_없는_칸[0] !== y || 밀어낼_수_없는_칸[1] !== x
     ),
+    이동할_수_있는_칸,
   };
 }
 
