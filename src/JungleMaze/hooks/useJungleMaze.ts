@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { 밀_수_있는_칸 } from "../constant";
 import createJungle from "../logic/createJungle";
 import createRandomStreet from "../logic/createRandomStreet";
+import getMovablePosition from "../logic/getMovablePosition";
 import rotatePiece from "../logic/rotatePiece";
 
 function useJungleMaze() {
@@ -61,6 +62,12 @@ function useJungleMaze() {
 
     set밀어낼_수_없는_칸([반대_좌표[0], 반대_좌표[1]]);
   }
+
+  const 이동할_수_있는_칸 = useMemo(() => {
+    return getMovablePosition(jungle, [6, 0]);
+  }, [jungle]);
+
+  console.log(이동할_수_있는_칸);
 
   return {
     jungle,
