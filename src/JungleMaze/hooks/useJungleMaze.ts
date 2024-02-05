@@ -8,7 +8,7 @@ import rotatePiece from "../logic/rotatePiece";
 function useJungleMaze() {
   const [jungle, setJungle] = useState(createJungle());
 
-  const [restPiece, setRestPiece] = useState(createRandomStreet());
+  const [restPiece, setRestPiece] = useState(createRandomStreet(2));
 
   const [밀어낼_수_없는_칸, set밀어낼_수_없는_칸] = useState<[number, number]>([
     -1, -1,

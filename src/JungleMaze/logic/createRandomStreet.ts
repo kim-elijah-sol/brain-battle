@@ -1,10 +1,7 @@
 import { streets } from "../constant";
 import { Street } from "../types";
 
-function createRandomStreet(): Street[] {
-  /** 2개 혹은 3개 */
-  const streetCount = Math.floor(Math.random() * 2) + 2;
-
+function createRandomStreet(streetCount: number): Street[] {
   const street: Street[] = [];
 
   /** 중복되지 않는 랜덤한 길을 생성 */
