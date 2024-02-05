@@ -1,11 +1,21 @@
 import { useMemo, useState } from "react";
-import { 밀_수_있는_칸 } from "../constant";
+import { toast } from "react-toastify";
+import { jungle길이, 밀_수_있는_칸 } from "../constant";
 import createJungle from "../logic/createJungle";
 import createRandomStreet from "../logic/createRandomStreet";
 import getMovablePosition from "../logic/getMovablePosition";
 import rotatePiece from "../logic/rotatePiece";
+import useJungleMazeUser from "./useJungleMazeUser";
 
 function useJungleMaze() {
+  const blueUser = useJungleMazeUser({ startPositon: [jungle길이 - 1, 0] });
+
+  const redUser = useJungleMazeUser({ startPositon: [0, jungle길이 - 1] });
+
+  const [action, setAction] = useState<"밀어내기" | "이동">("밀어내기");
+
+  const [turn, setTurn] = useState<"blue" | "red">("blue");
+
   const [jungle, setJungle] = useState(createJungle());
 
   const [restPiece, setRestPiece] = useState(createRandomStreet(2));
@@ -19,6 +29,8 @@ function useJungleMaze() {
   }
 
   function 밀어_넣기([y, x]: [number, number]) {
+    if (action === "이동") return;
+
     const 반대_좌표 = [
       y === 0 ? 6 : y === 6 ? 0 : y,
       x === 0 ? 6 : x === 6 ? 0 : x,
@@ -61,11 +73,33 @@ function useJungleMaze() {
     );
 
     set밀어낼_수_없는_칸([반대_좌표[0], 반대_좌표[1]]);
+    setAction("이동");
+  }
+
+  function 이동하기([y, x]: [number, number]) {
+    if (action === "밀어내기") return;
+
+    if (이동할_수_있는_칸.some(([_y, _x]) => _y === y && _x === x) === false) {
+      toast.error("이동할 수 없는 칸입니다.");
+      return;
+    }
+
+    if (turn === "blue") {
+      blueUser.setPosition([y, x]);
+    } else {
+      redUser.setPosition([y, x]);
+    }
+
+    setTurn(turn === "blue" ? "red" : "blue");
+    setAction("밀어내기");
   }
 
   const 이동할_수_있는_칸 = useMemo(() => {
-    return getMovablePosition(jungle, [6, 0]);
-  }, [jungle]);
+    return getMovablePosition(
+      jungle,
+      turn === "blue" ? blueUser.position : redUser.position
+    );
+  }, [jungle, turn, blueUser.position, redUser.position]);
 
   return {
     jungle,
@@ -76,6 +110,10 @@ function useJungleMaze() {
       ([y, x]) => 밀어낼_수_없는_칸[0] !== y || 밀어낼_수_없는_칸[1] !== x
     ),
     이동할_수_있는_칸,
+    blueUserPositon: blueUser.position,
+    redUserPositon: redUser.position,
+    이동하기,
+    action,
   };
 }
 

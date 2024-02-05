@@ -24,6 +24,10 @@ function JungleMaze() {
     밀어_넣기,
     밀_수_있는_칸,
     이동할_수_있는_칸,
+    이동하기,
+    action,
+    blueUserPositon,
+    redUserPositon,
   } = useJungleMaze();
 
   return (
@@ -55,7 +59,9 @@ function JungleMaze() {
                   boxSizing: "border-box",
                   position: "relative",
                   backgroundColor: "#30634b",
+                  cursor: "pointer",
                 }}
+                onClick={() => 이동하기([y, x])}
               >
                 {칸.street.map((street, index) => (
                   <div
@@ -71,11 +77,12 @@ function JungleMaze() {
                       [street === "n" || street === "s"
                         ? "height"
                         : "width"]: 50,
-                      backgroundColor: 이동할_수_있는_칸.some(
-                        ([_y, _x]) => x === _x && y === _y
-                      )
-                        ? "#a5dcc9"
-                        : "#9f9598",
+                      backgroundColor:
+                        이동할_수_있는_칸.some(
+                          ([_y, _x]) => x === _x && y === _y
+                        ) && action === "이동"
+                          ? "#a5dcc9"
+                          : "#9f9598",
                       [zeroPositionProperty[street]]: 0,
                       [fiftyPositionProperty[street]]: "50%",
                     }}
@@ -89,18 +96,17 @@ function JungleMaze() {
                     transform: "translate(-50%, -50%)",
                     width: 30,
                     height: 30,
-                    backgroundColor: 이동할_수_있는_칸.some(
-                      ([_y, _x]) => x === _x && y === _y
-                    )
-                      ? "#a5dcc9"
-                      : "#9f9598",
+                    backgroundColor:
+                      이동할_수_있는_칸.some(
+                        ([_y, _x]) => x === _x && y === _y
+                      ) && action === "이동"
+                        ? "#a5dcc9"
+                        : "#9f9598",
                   }}
                 />
-                {밀_수_있는_칸.some(([_y, _x]) => _x === x && _y === y) && (
+                {y === blueUserPositon[0] && x === blueUserPositon[1] && (
                   <div
-                    onClick={() => 밀어_넣기([y, x])}
                     css={{
-                      cursor: "pointer",
                       position: "absolute",
                       left: "50%",
                       top: "50%",
@@ -108,10 +114,43 @@ function JungleMaze() {
                       width: 50,
                       height: 50,
                       borderRadius: "50%",
-                      backgroundColor: "rgba(235, 232, 67, 0.5)",
+                      opacity: 0.5,
+                      backgroundColor: "blue",
                     }}
                   />
                 )}
+                {y === redUserPositon[0] && x === redUserPositon[1] && (
+                  <div
+                    css={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: 50,
+                      height: 50,
+                      borderRadius: "50%",
+                      opacity: 0.5,
+                      backgroundColor: "red",
+                    }}
+                  />
+                )}
+                {밀_수_있는_칸.some(([_y, _x]) => _x === x && _y === y) &&
+                  action === "밀어내기" && (
+                    <div
+                      onClick={() => 밀어_넣기([y, x])}
+                      css={{
+                        cursor: "pointer",
+                        position: "absolute",
+                        left: "50%",
+                        top: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 50,
+                        height: 50,
+                        borderRadius: "50%",
+                        backgroundColor: "rgba(235, 232, 67, 0.5)",
+                      }}
+                    />
+                  )}
               </div>
             ))}
           </div>
