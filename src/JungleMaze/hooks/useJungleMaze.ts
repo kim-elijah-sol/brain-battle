@@ -4,6 +4,7 @@ import { jungle길이, 밀_수_있는_칸 } from "../constant";
 import createJungle from "../logic/createJungle";
 import createRandomStreet from "../logic/createRandomStreet";
 import getMovablePosition from "../logic/getMovablePosition";
+import getMovedPosition from "../logic/getMovedPosition";
 import getOppositePosition from "../logic/getOppositePosition";
 import rotatePiece from "../logic/rotatePiece";
 import useJungleMazeUser from "./useJungleMazeUser";
@@ -36,12 +37,39 @@ function useJungleMaze() {
 
     const 밀려_나가는_조각 = jungle[반대_좌표[0]][반대_좌표[1]].street;
 
-    setRestPiece([...밀려_나가는_조각]);
-
     const 방향 = x === 0 || x === 6 ? "x" : "y";
 
     const 이동_방향 = 방향 === "x" ? (x === 0 ? -1 : 1) : y === 0 ? -1 : 1;
 
+    const nextBlueUserPosition = getMovedPosition(
+      blueUser.position,
+      [y, x],
+      방향,
+      이동_방향
+    );
+
+    const nextRedUserPosition = getMovedPosition(
+      redUser.position,
+      [y, x],
+      방향,
+      이동_방향
+    );
+
+    if (
+      nextBlueUserPosition[0] !== blueUser.position[0] ||
+      nextBlueUserPosition[1] !== blueUser.position[1]
+    ) {
+      blueUser.setPosition(nextBlueUserPosition);
+    }
+
+    if (
+      nextRedUserPosition[0] !== redUser.position[0] ||
+      nextRedUserPosition[1] !== redUser.position[1]
+    ) {
+      redUser.setPosition(nextRedUserPosition);
+    }
+
+    setRestPiece([...밀려_나가는_조각]);
     setJungle(
       jungle.map((행, _y) =>
         행.map((칸, _x) => {
@@ -69,7 +97,6 @@ function useJungleMaze() {
         })
       )
     );
-
     set방금_밀어낸_칸([반대_좌표[0], 반대_좌표[1]]);
     setAction("이동");
   }
