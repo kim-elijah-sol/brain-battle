@@ -159,8 +159,8 @@ function useJungleMaze() {
     밀어_넣기,
     밀_수_있는_칸: _밀_수_있는_칸,
     이동할_수_있는_칸,
-    blueUserPositon: blueUser.position,
-    redUserPositon: redUser.position,
+    blueUser,
+    redUser,
     이동하기,
     action,
   };

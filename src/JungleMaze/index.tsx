@@ -26,8 +26,8 @@ function JungleMaze() {
     이동할_수_있는_칸,
     이동하기,
     action,
-    blueUserPositon,
-    redUserPositon,
+    blueUser,
+    redUser,
   } = useJungleMaze();
 
   return (
@@ -104,7 +104,7 @@ function JungleMaze() {
                         : "#9f9598",
                   }}
                 />
-                {y === blueUserPositon[0] && x === blueUserPositon[1] && (
+                {y === blueUser.position[0] && x === blueUser.position[1] && (
                   <div
                     css={{
                       position: "absolute",
@@ -119,7 +119,7 @@ function JungleMaze() {
                     }}
                   />
                 )}
-                {y === redUserPositon[0] && x === redUserPositon[1] && (
+                {y === redUser.position[0] && x === redUser.position[1] && (
                   <div
                     css={{
                       position: "absolute",
