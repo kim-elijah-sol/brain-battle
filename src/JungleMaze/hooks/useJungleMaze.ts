@@ -4,6 +4,7 @@ import { jungle길이, 밀_수_있는_칸 } from "../constant";
 import createJungle from "../logic/createJungle";
 import createRandomStreet from "../logic/createRandomStreet";
 import getMovablePosition from "../logic/getMovablePosition";
+import getOppositePosition from "../logic/getOppositePosition";
 import rotatePiece from "../logic/rotatePiece";
 import useJungleMazeUser from "./useJungleMazeUser";
 
@@ -20,7 +21,7 @@ function useJungleMaze() {
 
   const [restPiece, setRestPiece] = useState(createRandomStreet(2));
 
-  const [밀어낼_수_없는_칸, set밀어낼_수_없는_칸] = useState<[number, number]>([
+  const [방금_밀어낸_칸, set방금_밀어낸_칸] = useState<[number, number]>([
     -1, -1,
   ]);
 
@@ -72,7 +73,7 @@ function useJungleMaze() {
       )
     );
 
-    set밀어낼_수_없는_칸([반대_좌표[0], 반대_좌표[1]]);
+    set방금_밀어낸_칸([반대_좌표[0], 반대_좌표[1]]);
     setAction("이동");
   }
 
@@ -101,14 +102,38 @@ function useJungleMaze() {
     );
   }, [jungle, turn, blueUser.position, redUser.position]);
 
+  const _밀_수_있는_칸 = useMemo(() => {
+    const [by, bx] = blueUser.position;
+
+    const blueUser의_반대 = [
+      getOppositePosition(by),
+      getOppositePosition(bx),
+    ] as const;
+
+    const [ry, rx] = redUser.position;
+
+    const redUser의_반대 = [
+      getOppositePosition(ry),
+      getOppositePosition(rx),
+    ] as const;
+
+    const 밀_수_없는_칸 = [
+      blueUser의_반대,
+      redUser의_반대,
+      방금_밀어낸_칸,
+    ] as const;
+
+    return 밀_수_있는_칸.filter(([y, x]) => {
+      return 밀_수_없는_칸.some(([by, bx]) => by === y && bx === x) === false;
+    });
+  }, [방금_밀어낸_칸, blueUser.position, redUser.position]);
+
   return {
     jungle,
     restPiece,
     남은_조각_돌리기,
     밀어_넣기,
-    밀_수_있는_칸: 밀_수_있는_칸.filter(
-      ([y, x]) => 밀어낼_수_없는_칸[0] !== y || 밀어낼_수_없는_칸[1] !== x
-    ),
+    밀_수_있는_칸: _밀_수_있는_칸,
     이동할_수_있는_칸,
     blueUserPositon: blueUser.position,
     redUserPositon: redUser.position,
