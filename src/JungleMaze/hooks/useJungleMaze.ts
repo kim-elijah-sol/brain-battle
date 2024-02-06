@@ -32,10 +32,7 @@ function useJungleMaze() {
   function 밀어_넣기([y, x]: [number, number]) {
     if (action === "이동") return;
 
-    const 반대_좌표 = [
-      y === 0 ? 6 : y === 6 ? 0 : y,
-      x === 0 ? 6 : x === 6 ? 0 : x,
-    ] as const;
+    const 반대_좌표 = [getOppositePosition(y), getOppositePosition(x)] as const;
 
     const 밀려_나가는_조각 = jungle[반대_좌표[0]][반대_좌표[1]].street;
 
