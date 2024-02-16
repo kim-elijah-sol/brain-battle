@@ -144,16 +144,18 @@ function useJungleMaze() {
       getOppositePosition(rx),
     ] as const;
 
+    const 목표물_칸 = targets.map(({ position }) => position);
+
     const 밀_수_없는_칸 = [
       blueUser의_반대,
       redUser의_반대,
       방금_밀어낸_칸,
-    ] as const;
+    ].concat(목표물_칸);
 
     return 밀_수_있는_칸.filter(([y, x]) => {
       return 밀_수_없는_칸.some(([by, bx]) => by === y && bx === x) === false;
     });
-  }, [방금_밀어낸_칸, blueUser.position, redUser.position]);
+  }, [방금_밀어낸_칸, blueUser.position, redUser.position, targets]);
 
   return {
     jungle,
