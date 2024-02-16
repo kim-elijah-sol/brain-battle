@@ -72,6 +72,31 @@ function useJungleMaze() {
       redUser.setPosition(nextRedUserPosition);
     }
 
+    setTargets(
+      targets.map(({ target, position }) => {
+        const nextPosition = getMovedPosition(
+          position,
+          [y, x],
+          방향,
+          이동_방향
+        );
+
+        if (
+          nextPosition[0] !== position[0] ||
+          nextPosition[1] !== position[1]
+        ) {
+          return {
+            target,
+            position: nextPosition,
+          };
+        }
+
+        return {
+          target,
+          position,
+        };
+      })
+    );
     setRestPiece([...밀려_나가는_조각]);
     setJungle(
       jungle.map((행, _y) =>
