@@ -81,19 +81,9 @@ function useJungleMaze() {
           이동_방향
         );
 
-        if (
-          nextPosition[0] !== position[0] ||
-          nextPosition[1] !== position[1]
-        ) {
-          return {
-            target,
-            position: nextPosition,
-          };
-        }
-
         return {
           target,
-          position,
+          position: nextPosition,
         };
       })
     );
