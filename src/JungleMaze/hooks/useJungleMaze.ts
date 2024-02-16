@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { jungle길이, 밀_수_있는_칸 } from "../constant";
 import createJungle from "../logic/createJungle";
 import createRandomStreet from "../logic/createRandomStreet";
+import createTarget from "../logic/createTarget";
 import getMovablePosition from "../logic/getMovablePosition";
 import getMovedPosition from "../logic/getMovedPosition";
 import getOppositePosition from "../logic/getOppositePosition";
@@ -21,6 +22,8 @@ function useJungleMaze() {
   const [jungle, setJungle] = useState(createJungle());
 
   const [restPiece, setRestPiece] = useState(createRandomStreet(2));
+
+  const [targets, setTargets] = useState(createTarget());
 
   const [방금_밀어낸_칸, set방금_밀어낸_칸] = useState<[number, number]>([
     -1, -1,
@@ -163,6 +166,7 @@ function useJungleMaze() {
     redUser,
     이동하기,
     action,
+    targets,
   };
 }
 

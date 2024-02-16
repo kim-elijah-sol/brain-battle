@@ -28,6 +28,7 @@ function JungleMaze() {
     action,
     blueUser,
     redUser,
+    targets,
   } = useJungleMaze();
 
   return (
@@ -151,6 +152,30 @@ function JungleMaze() {
                       }}
                     />
                   )}
+                {targets
+                  .filter(({ position: [_y, _x] }) => _y === y && _x === x)
+                  .map(({ target }) => (
+                    <div
+                      key={target}
+                      style={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "50%",
+                        transform: "translate(-50%, -50%)",
+                        color: "white",
+                        fontSize: 20,
+                        width: 50,
+                        height: 50,
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        borderRadius: "50%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {target.toUpperCase()}
+                    </div>
+                  ))}
               </div>
             ))}
           </div>
