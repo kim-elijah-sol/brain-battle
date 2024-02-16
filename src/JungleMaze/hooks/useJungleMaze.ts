@@ -159,7 +159,13 @@ function useJungleMaze() {
       getOppositePosition(rx),
     ] as const;
 
-    const 목표물_칸 = targets.map(({ position }) => position);
+    const 목표물_칸 = targets.map(
+      ({ position }) =>
+        [
+          getOppositePosition(position[0]),
+          getOppositePosition(position[1]),
+        ] as const
+    );
 
     const 밀_수_없는_칸 = [
       blueUser의_반대,
