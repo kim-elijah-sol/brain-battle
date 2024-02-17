@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { jungle길이, 밀_수_있는_칸 } from "../constant";
 import createJungle from "../logic/createJungle";
@@ -147,6 +147,15 @@ function useJungleMaze() {
     setAction("밀어내기");
   }
 
+  function 게임_초기화() {
+    setJungle(createJungle());
+    setRestPiece(createRandomStreet(2));
+    setTargets(createTarget());
+    blueUser.초기화();
+    redUser.초기화();
+    setTurn("blue");
+  }
+
   const 이동할_수_있는_칸 = useMemo(() => {
     return getMovablePosition(
       jungle,
@@ -188,6 +197,17 @@ function useJungleMaze() {
     });
   }, [방금_밀어낸_칸, blueUser.position, redUser.position, targets]);
 
+  useEffect(() => {
+    if (blueUser.nextTarget === null) {
+      toast.success("파란색 유저가 이겼습니다.");
+      게임_초기화();
+    } else if (redUser.nextTarget === null) {
+      toast.success("빨간색 유저가 이겼습니다.");
+      게임_초기화();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blueUser, redUser]);
+
   return {
     jungle,
     restPiece,
@@ -200,6 +220,7 @@ function useJungleMaze() {
     이동하기,
     action,
     targets,
+    게임_초기화,
   };
 }
 

@@ -32,12 +32,23 @@ function useJungleMazeUser({ startPositon }: Props) {
     );
   }
 
+  function 초기화() {
+    setPosition(startPositon);
+    setTargets(
+      getRandomTargets().map((target) => ({
+        target,
+        isFind: false,
+      }))
+    );
+  }
+
   return {
     position,
     targets,
     nextTarget,
     setPosition,
     handleFindTarget,
+    초기화,
   };
 }
 
