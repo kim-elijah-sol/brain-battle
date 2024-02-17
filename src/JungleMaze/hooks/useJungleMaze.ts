@@ -133,6 +133,16 @@ function useJungleMaze() {
       redUser.setPosition([y, x]);
     }
 
+    const 도착_지점에_있는_목표물 = targets.find(
+      ({ position }) => position[0] === y && position[1] === x
+    );
+
+    if (도착_지점에_있는_목표물?.target === blueUser.nextTarget) {
+      blueUser.handleFindTarget();
+    } else if (도착_지점에_있는_목표물?.target === redUser.nextTarget) {
+      redUser.handleFindTarget();
+    }
+
     setTurn(turn === "blue" ? "red" : "blue");
     setAction("밀어내기");
   }
