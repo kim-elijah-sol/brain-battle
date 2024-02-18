@@ -184,52 +184,86 @@ function JungleMaze() {
 
       <div
         css={{
-          width: 100,
-          height: 100,
-          border: "1px solid black",
-          boxSizing: "border-box",
-          position: "relative",
-          backgroundColor: "#30634b",
           marginTop: 20,
+          display: "flex",
+          alignItems: "center",
+          gap: 100,
         }}
       >
-        {restPiece.map((street, index) => (
-          <div
-            key={index}
-            css={{
-              position: "absolute",
-              transform: `translate${
-                street === "n" || street === "s" ? "X" : "Y"
-              }(-50%)`,
-              [street === "n" || street === "s" ? "width" : "height"]: 30,
-              [street === "n" || street === "s" ? "height" : "width"]: 50,
-              backgroundColor: "#9f9598",
-              [zeroPositionProperty[street]]: 0,
-              [fiftyPositionProperty[street]]: "50%",
-            }}
-          />
-        ))}
+        <p>
+          <strong css={{ color: "blue", marginRight: 20 }}>blueUser</strong>
+          <span>
+            {blueUser.targets
+              .filter(({ isFind }) => !isFind)
+              .map((target) => target.target)
+              .join(", ")}
+          </span>
+        </p>
         <div
           css={{
-            position: "absolute",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 30,
-            height: 30,
-            backgroundColor: "#9f9598",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
-        />
-      </div>
+        >
+          <div
+            css={{
+              width: 100,
+              height: 100,
+              border: "1px solid black",
+              boxSizing: "border-box",
+              position: "relative",
+              backgroundColor: "#30634b",
+            }}
+          >
+            {restPiece.map((street, index) => (
+              <div
+                key={index}
+                css={{
+                  position: "absolute",
+                  transform: `translate${
+                    street === "n" || street === "s" ? "X" : "Y"
+                  }(-50%)`,
+                  [street === "n" || street === "s" ? "width" : "height"]: 30,
+                  [street === "n" || street === "s" ? "height" : "width"]: 50,
+                  backgroundColor: "#9f9598",
+                  [zeroPositionProperty[street]]: 0,
+                  [fiftyPositionProperty[street]]: "50%",
+                }}
+              />
+            ))}
+            <div
+              css={{
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                width: 30,
+                height: 30,
+                backgroundColor: "#9f9598",
+              }}
+            />
+          </div>
 
-      <button
-        css={{
-          marginTop: 20,
-        }}
-        onClick={남은_조각_돌리기}
-      >
-        남은 조각 돌리기
-      </button>
+          <button
+            css={{
+              marginTop: 20,
+            }}
+            onClick={남은_조각_돌리기}
+          >
+            남은 조각 돌리기
+          </button>
+        </div>
+        <p>
+          <strong css={{ color: "red", marginRight: 20 }}>redUser</strong>
+          <span>
+            {redUser.targets
+              .filter(({ isFind }) => !isFind)
+              .map((target) => target.target)
+              .join(", ")}
+          </span>
+        </p>
+      </div>
     </FullLayout>
   );
 }
