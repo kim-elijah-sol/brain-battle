@@ -198,10 +198,18 @@ function useJungleMaze() {
   }, [방금_밀어낸_칸, blueUser.position, redUser.position, targets]);
 
   useEffect(() => {
-    if (blueUser.nextTarget === null) {
+    if (
+      blueUser.nextTarget === null &&
+      blueUser.position[0] === jungle길이 - 1 &&
+      blueUser.position[1] === 0
+    ) {
       toast.success("파란색 유저가 이겼습니다.");
       게임_초기화();
-    } else if (redUser.nextTarget === null) {
+    } else if (
+      redUser.nextTarget === null &&
+      redUser.position[0] === 0 &&
+      redUser.position[1] === jungle길이 - 1
+    ) {
       toast.success("빨간색 유저가 이겼습니다.");
       게임_초기화();
     }
