@@ -1,35 +1,8 @@
-import {
-  Outlet,
-  RouterProvider,
-  createRootRoute,
-  createRoute,
-  createRouter,
-} from "@tanstack/react-router";
-import IndexPage from "./pages";
-import ColorTurnPage from "./pages/color-turn";
-import JungleMazePage from "./pages/jungle-maze";
-
-const rootRoute = createRootRoute({
-  component: () => <Outlet />,
-});
-
-const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: IndexPage,
-});
-
-const colorTurnRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/color-turn",
-  component: ColorTurnPage,
-});
-
-const jungleMazeRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/jungle-maze",
-  component: JungleMazePage,
-});
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+import indexRoute from "./pages";
+import colorTurnRoute from "./pages/color-turn";
+import jungleMazeRoute from "./pages/jungle-maze";
+import rootRoute from "./route/rootRoute";
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
