@@ -1,32 +1,46 @@
-import { useState } from "react";
-import ColorTurn from "./ColorTurn";
-import JungleMaze from "./JungleMaze";
+import {
+  Outlet,
+  RouterProvider,
+  createRootRoute,
+  createRoute,
+  createRouter,
+} from "@tanstack/react-router";
+import IndexPage from "./pages";
+import ColorTurnPage from "./pages/color-turn";
+import JungleMazePage from "./pages/jungle-maze";
+
+const rootRoute = createRootRoute({
+  component: () => <Outlet />,
+});
+
+const indexRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: IndexPage,
+});
+
+const colorTurnRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/color-turn",
+  component: ColorTurnPage,
+});
+
+const jungleMazeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/jungle-maze",
+  component: JungleMazePage,
+});
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  colorTurnRoute,
+  jungleMazeRoute,
+]);
+
+const router = createRouter({ routeTree, defaultPreload: "intent" });
 
 function App() {
-  const [game, setGame] = useState<string>("JungleMaze");
-
-  return (
-    <>
-      <div>
-        <input
-          type="radio"
-          id="ColorTurn"
-          checked={game === "ColorTurn"}
-          onChange={() => setGame("ColorTurn")}
-        />
-        <label htmlFor="ColorTurn">ColorTurn</label>
-        <input
-          type="radio"
-          id="JungleMaze"
-          checked={game === "JungleMaze"}
-          onChange={() => setGame("JungleMaze")}
-        />
-        <label htmlFor="JungleMaze">JungleMaze</label>
-      </div>
-      {game === "ColorTurn" && <ColorTurn />}
-      {game === "JungleMaze" && <JungleMaze />}
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
