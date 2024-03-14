@@ -1,8 +1,16 @@
 import rootRoute from "@/route/rootRoute";
-import { createRoute } from "@tanstack/react-router";
+import { createRoute, useRouter } from "@tanstack/react-router";
 
 function ColorTurnPage() {
-  return <h1>color-turn</h1>;
+  const router = useRouter();
+
+  return (
+    <main>
+      <h1>color-turn</h1>
+
+      <button onClick={() => router.history.back()}>go Back</button>
+    </main>
+  );
 }
 
 const colorTurnRoute = createRoute({

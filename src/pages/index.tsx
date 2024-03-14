@@ -1,8 +1,8 @@
 import rootRoute from "@/route/rootRoute";
-import { Link, createRoute, useNavigate } from "@tanstack/react-router";
+import { Link, createRoute, useRouter } from "@tanstack/react-router";
 
 function IndexPage() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <main>
@@ -12,13 +12,7 @@ function IndexPage() {
         <Link to="/color-turn">color-turn</Link>
       </div>
 
-      <button
-        onClick={() =>
-          navigate({
-            to: "/jungle-maze",
-          })
-        }
-      >
+      <button onClick={() => router.history.push("/jungle-maze")}>
         jungle-maze
       </button>
     </main>
