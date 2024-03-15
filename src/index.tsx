@@ -17,6 +17,17 @@ root.render(
       `}
     />
     <App />
-    <ToastContainer autoClose={3000} closeButton={false} stacked />
+    <ToastContainer
+      autoClose={3000}
+      closeButton={false}
+      stacked
+      toastStyle={{
+        background: "rgba(227, 227, 227, 0.25)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid rgba(255, 255, 255, 0.24)",
+        color: "white",
+        borderRadius: 12,
+      }}
+    />
   </React.StrictMode>
 );
